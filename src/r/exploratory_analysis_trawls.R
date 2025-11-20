@@ -1,16 +1,17 @@
 #### Imports ####
 library(here) # For robust file paths
+
 library(tidyverse) # Data wrangling and visualization
 library(patchwork) # Arranging plots easily
 
 # Making maps
 library(sf)
+library(ggsflabel)
 library(rnaturalearth)
 library(marmap)
 library(suncalc)
 
 #### Loading data ####
-
 root <- here()
 
 ## ABRAÇOS data
@@ -66,6 +67,9 @@ bathy <- getNOAA.bathy(
 bathy_df <- fortify.bathy(bathy)
 
 ### Plots ####
+
+save_path <- "reports/figures/exploratory-analysis/"
+
 # Map sampling sites
 stations |> 
   ggplot() +
@@ -78,6 +82,11 @@ stations |>
   facet_wrap(~Id_Survey) +
   coord_sf(xlim=c(bbox["xmin"], bbox["xmax"]), ylim=c(bbox["ymin"], bbox["ymax"])) +
   theme_minimal()
+ggsave(
+  file.path(save_path, "trawling_stations_all_abracos.png"),
+  width=11,
+  height=8.5
+)
 
 # Map catch per minimal compartment
 biodata|> 
@@ -97,6 +106,11 @@ biodata|>
   coord_sf(xlim=c(bbox["xmin"], bbox["xmax"]), ylim=c(bbox["ymin"], bbox["ymax"])) +
   scale_size_binned(breaks=c(10, 100, 500, 1000)) +
   theme_minimal()
+ggsave(
+  file.path(save_path, "trawling_stations_all_by_compartment_abracos.png"),
+  width=16,
+  height=8.5
+)
 
 # Only relevant stations
 biodata |> 
@@ -114,7 +128,7 @@ biodata |>
   geom_contour(data=bathy_df, aes(x=x, y=y, z=z), breaks=c(-100, -1000), color="black", linewidth=0.3) +
   # Stations
   geom_sf(aes(size=N_Samples, shape=Operation, color=Compartment), alpha=0.7) +
-  geom_sf_text(aes(label = Id_Station)) +
+  geom_sf_text_repel(aes(label = Id_Station)) +
   # Coast
   geom_sf(data=countries) +
   # Plot params
@@ -122,6 +136,11 @@ biodata |>
   coord_sf(xlim=c(bbox["xmin"], bbox["xmax"]), ylim=c(bbox["ymin"], bbox["ymax"])) +
   scale_size_binned(breaks=c(10, 100, 500, 1000)) +
   theme_minimal()
+ggsave(
+  file.path(save_path, "trawling_stations_valid_by_compartment_abracos.png"),
+  width=16,
+  height=8.5
+)
 
 # Size distributions
 # Select taxa by checking abundances
@@ -173,6 +192,12 @@ p5 <- taxa_ranking_plot("Family", pct_thresh=90)
 
 (p1 / p2 / p3) | (p4 / p5)
 
+ggsave(
+  file.path(save_path, "trawling_abundances_abracos_by_taxolevel.png"),
+  width=16,
+  height=8.5
+)
+
 # Size distributions for families of mesopelagic fishes
 
 plot_size_dists <- function(taxo_level="Family", taxo_id="Myctophidae", facet_scale="free_y", binwidth=1){
@@ -205,7 +230,7 @@ p_stomii
 
 # Size distributions of Euphausiidae
 p_euphau <- plot_size_dists("Family", "Euphausiidae")
-p_euphau # No size measurements...
+#p_euphau # No size measurements...
 
 # For the only abundant family of pelagic molluscs
 p_eno <- plot_size_dists("Family", "Enoploteuthidae", binwidth=0.5) 
