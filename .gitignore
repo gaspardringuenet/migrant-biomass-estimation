@@ -1,0 +1,10 @@
+# Data
+/data/external
+/data/interim/
+/data/processed/
+/data/raw/acoustic-data/
+
+
+.DS_Store
+.RData
+.Rhistory
