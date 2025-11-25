@@ -8,4 +8,6 @@ dependencies:
   - matplotlib
   - cartopy
   - scipy
+  - jupyter
   - ipykernel
+  - h5py

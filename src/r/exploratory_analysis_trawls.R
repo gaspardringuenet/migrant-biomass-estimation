@@ -16,17 +16,17 @@ root <- here()
 
 ## ABRAÇOS data
 # Biological data (trawl samples, identified and measured)
-biodata_A1 <- read_delim(file.path(root, "data/raw/abracos_trawls/Demersal_Deep_Pelagic_Biological_Data_Abracos1.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Reg = col_character()))
-biodata_A2 <- read_delim(file.path(root, "data/raw/abracos_trawls/Demersal_Deep_Pelagic_Biological_Data_Abracos2.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Reg = col_character()))
+biodata_A1 <- read_delim(file.path(root, "data/raw/catch-data/abracos/Demersal_Deep_Pelagic_Biological_Data_Abracos1.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Reg = col_character()))
+biodata_A2 <- read_delim(file.path(root, "data/raw/catch-data/abracos/Demersal_Deep_Pelagic_Biological_Data_Abracos2.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Reg = col_character()))
 biodata <- biodata_A1 |> bind_rows(biodata_A2)
 
 # Fishing operations
-stations_A1 <- read_delim(file.path(root, "data/raw/abracos_trawls/Demersal_Deep_Pelagic_Survey_Station_Abracos1.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Station = col_character()))
-stations_A2 <- read_delim(file.path(root, "data/raw/abracos_trawls/Demersal_Deep_Pelagic_Survey_Station_Abracos2.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Station = col_character()))
+stations_A1 <- read_delim(file.path(root, "data/raw/catch-data/abracos/Demersal_Deep_Pelagic_Survey_Station_Abracos1.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Station = col_character()))
+stations_A2 <- read_delim(file.path(root, "data/raw/catch-data/abracos/Demersal_Deep_Pelagic_Survey_Station_Abracos2.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE, col_types = cols(Station = col_character()))
 stations <- stations_A1 |> bind_rows(stations_A2)
 
 # Species list
-species <- read_delim(file.path(root, "data/raw/abracos_trawls/Demersal_Deep_Pelagic_Species_List_Abracos.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE)
+species <- read_delim(file.path(root, "data/raw/catch-data/abracos/Demersal_Deep_Pelagic_Species_List_Abracos.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE)
 
 ## Map data
 countries <- ne_countries(country="brazil", scale="large") |> st_set_crs(value=4326)
