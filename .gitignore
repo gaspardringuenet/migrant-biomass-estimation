@@ -3,6 +3,7 @@
 /data/interim/
 /data/processed/
 /data/raw/acoustic-data/
+/data/raw/trawling-tracks/
 
 
 .DS_Store
