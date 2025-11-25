@@ -1,5 +1,5 @@
 # Data
-/data/external
+/data/external/
 /data/interim/
 /data/processed/
 /data/raw/acoustic-data/
@@ -9,3 +9,5 @@
 .RData
 .Rhistory
 .Rproj.user
+
+/env/
